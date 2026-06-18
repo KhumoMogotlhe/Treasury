@@ -1,23 +1,8 @@
-import { auth } from "@/auth";
-import { NextResponse } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-export default auth((req) => {
-  const { pathname } = req.nextUrl;
-  const isLoggedIn = !!req.auth;
-
-  const isProtected =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/admin");
-  const isAuthRoute =
-    pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
-
-  if (isProtected && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/sign-in", req.url));
-  }
-
-  if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
-});
+// Only bundles the Edge-safe authConfig — no Prisma, no bcryptjs.
+export const { auth: middleware } = NextAuth(authConfig);
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
