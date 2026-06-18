@@ -5,7 +5,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { authConfig } from "./auth.config";
 
 const CredentialsSchema = z.object({
   email: z.string().email(),
@@ -13,7 +12,7 @@ const CredentialsSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  ...authConfig,
+  pages: { signIn: "/sign-in", error: "/sign-in" },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   providers: [
