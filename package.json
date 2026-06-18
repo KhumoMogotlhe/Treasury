@@ -1,0 +1,13 @@
+{
+  "name": "dimensity",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @dimensity/web dev",
+    "build": "pnpm --filter @dimensity/web build"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}
